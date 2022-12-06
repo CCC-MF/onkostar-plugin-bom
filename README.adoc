@@ -1,0 +1,78 @@
+= Onkostar plugin BOM
+
+Simple bill of materials (BOM) for Onkostar plugins
+
+== Install into local maven repository
+
+Linux, macOS etc.
+
+```shell
+./mvnw install
+```
+
+Windows
+
+```shell
+mvnw.exe install
+```
+
+== Maven
+
+Usage in Maven
+
+```xml
+<properties>
+  <maven.compiler.source>11</maven.compiler.source>
+  <maven.compiler.target>11</maven.compiler.target>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+  <onkostar-version>2.11.1.1</onkostar-version>
+</properties>
+
+<dependencyManagement>
+  <dependencies>
+    <!-- Import BOM -->
+    <dependency>
+      <groupId>de.ukw.ccc.onkostar</groupId>
+      <artifactId>onkostar-plugin-bom</artifactId>
+      <version>${onkostar-version}-SNAPSHOT</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+
+<dependencies>
+  <!-- Onkostar API JAR -->
+  <dependency>
+    <groupId>de.itc</groupId>
+    <artifactId>onkostar-api</artifactId>
+    <scope>system</scope>
+    <systemPath>${project.basedir}/libs/onkostar-api-${onkostar-version}.jar</systemPath>
+  </dependency>
+
+  <!-- Other dependencies required by plugin and provided by Onkostar. Version is defined in BOM. -->
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+  </dependency>
+
+</dependencies>
+```
+
+== Gradle
+
+Usage in Gradle
+
+```groovy
+dependencies {
+  // Import BOM
+  implementation platform("de.ukw.ccc.onkostar:onkostar-plugin-bom:${onkostarVersion}-SNAPSHOT")
+
+  // Onkostar API JAR
+  implementation files("${project.basedir}/libs/onkostar-api-${onkostarVersion}.jar")
+
+  // Other dependencies required by plugin and provided by Onkostar. Version is defined in BOM.
+  implementation("org.springframework:spring-context")
+}
+```
